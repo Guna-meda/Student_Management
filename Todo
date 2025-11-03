@@ -1,0 +1,20 @@
+// Funtions to be implemented
+
+/*
+Book Management : add , remove update
+Search & Recommendation : searchBooks , autoComplete , recommendBooks
+Member Management : registerMember
+Borrow / return : checkOutBook , checkInBook
+Reservation and fine : reserveBook , calculateFine , processReser
+Reports : generateReport
+*/
+
+/*
+| Data Structure     | Type                   | Where You’ll Use It                             | Why                                                   |
+| ------------------ | ---------------------- | ----------------------------------------------- | ----------------------------------------------------- |
+| **AVL Tree**       | Non-linear             | Store books sorted by ISBN                      | Keeps searches fast and balanced (O(log n))           |
+| **Hash Map**       | Linear                 | Store members and quick lookup by member ID     | O(1) access for members                               |
+| **Trie**           | Non-linear             | For auto-complete on book titles                | Efficient prefix-based search                         |
+| **Graph**          | Non-linear             | For book recommendation relationships           | Model “books borrowed together” or “similar subjects” |
+| **Priority Queue** | Linear (based on heap) | For managing book reservations or overdue fines | Prioritize users based on date or fine amount         |
+*/
