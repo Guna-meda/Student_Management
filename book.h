@@ -1,6 +1,8 @@
 #ifndef BOOK_H
 #define BOOK_H
 
+#include "utils.h"
+
 typedef struct {
     char isbn[20];
     char title[100];
@@ -8,11 +10,10 @@ typedef struct {
     int copies;
 } Book;
 
-void addBook();
-void removeBook();
-void searchBook();
-void updateInventory();
-void loadBooks();
-void saveBooks();
+
+void addBook(Library *lib);
+void removeBook(Library *lib);
+void searchBook(Library *lib);
+void updateInventory(Library *lib);
 
 #endif
