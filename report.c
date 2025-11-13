@@ -9,7 +9,7 @@ static void print_book(AVLNode *n) {
     printf("%s | %s | %s | %d copies\n", b->isbn, b->title, b->author, b->copies);
 }
 
-static void member_report(void *val) {
+static void member_report(const char *id, void *val) {  // ← FIXED: added 'id'
     MemberExt *m = val;
     printf("%s | %s | %s | borrowed:%d\n",
            m->info.memberId, m->info.name, m->info.email, m->borrowedCount);
@@ -22,17 +22,23 @@ void generateReport(Library *lib) {
     switch (type) {
         case 0:
             printf("=== BOOK INVENTORY ===\n");
-            avl_inorder(lib->bookRoot, print_book);
+            if (lib->bookRoot) avl_inorder(lib->bookRoot, print_book);
+            else printf("No books in inventory.\n");
             break;
         case 1:
             printf("=== MEMBERS ===\n");
-            hm_foreach(lib->memberMap, member_report);
+            if (lib->memberMap) hm_foreach(lib->memberMap, member_report);
+            else printf("No members registered.\n");
             break;
         case 2:
             printf("=== RESERVATION QUEUE (size %d) ===\n", lib->reservationPQ->size);
-            for (int i = 0; i < lib->reservationPQ->size; ++i) {
-                Reservation *r = &lib->reservationPQ->heap[i];
-                printf("%s wants %s (ts=%lld)\n", r->memberId, r->isbn, r->timestamp);
+            if (lib->reservationPQ->size == 0) {
+                printf("No reservations.\n");
+            } else {
+                for (int i = 0; i < lib->reservationPQ->size; ++i) {
+                    Reservation *r = &lib->reservationPQ->heap[i];
+                    printf("%s wants %s (ts=%lld)\n", r->memberId, r->isbn, r->timestamp);
+                }
             }
             break;
         default:
