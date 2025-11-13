@@ -4,7 +4,7 @@
 #include "book.h"
 #include "member.h"
 #include "reservation.h"
-#include "search.h"     // ← For autoComplete & recommendBooks
+#include "search.h"
 #include "report.h"
 
 int main() {
@@ -25,12 +25,14 @@ int main() {
         printf("9. Generate Report\n");
         printf("10. Recommend Books\n");
         printf("11. Auto Complete Title\n");
+        printf("12. Get Overdue Books\n");  
+        printf("13. Get Member History\n");
         printf("0. Exit\n");
         printf("Enter choice: ");
 
         if (scanf("%d", &choice) != 1) {
             int c;
-            while ((c = getchar()) != '\n' && c != EOF);  // Clear invalid input
+            while ((c = getchar()) != '\n' && c != EOF);
             printf("Invalid input! Please enter a number.\n");
             continue;
         }
@@ -47,9 +49,21 @@ int main() {
             case 9:  generateReport(&lib); break;
             case 10: recommendBooks(&lib); break;
             case 11: autoComplete(&lib); break;
+            case 12: {
+                char mid[64];
+                printf("Enter Member ID: "); scanf("%s", mid);
+                getOverdueBooks(&lib, mid);
+                break;
+            }
+            case 13: {
+    char mid[64];
+    printf("Enter Member ID: "); scanf("%s", mid);
+    getMemberHistory(&lib, mid);
+    break;
+}
+            
             case 0:
                 printf("Thank you for using the Library System. Goodbye!\n");
-                // Optional: destroyLibrary(&lib);  // Uncomment if you add cleanup
                 return 0;
             default:
                 printf("Invalid choice! Please try again.\n");

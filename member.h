@@ -10,20 +10,32 @@ typedef struct {
     char email[50];
 } Member;
 
+/* Borrow record type */
+typedef struct {
+    char isbn[20];
+    int  daysOverdue;
+    long long checkoutTime;
+    long long dueTime;
+} BorrowRecord;
+
 /* FULL DEFINITION — visible to all modules */
 typedef struct {
     Member info;
-    struct {
-        char isbn[20];
-        int daysOverdue;
-    } *borrowed;
+    BorrowRecord *borrowed;
     int borrowedCount;
     int borrowedCap;
+
+    // ← NEW: HISTORY FIELDS
+    BorrowRecord *history;
+    int historyCount;
+    int historyCap;
 } MemberExt;
 
 /* Public API */
 void registerMember(Library *lib);
 void calculateFine(Library *lib);
+void getOverdueBooks(Library *lib, const char *memberId);
+void getMemberHistory(Library *lib, const char *memberId);  // ← already there
 
 /* Helpers */
 void member_add_borrow(MemberExt *m, const char *isbn);

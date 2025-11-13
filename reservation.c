@@ -22,17 +22,22 @@ void checkOutBook(Library *lib) {
 
     /* decrement copies */
     --b->copies;
-    member_add_borrow(m, isbn);
 
-    /* update recommendation graph – connect with every other borrowed book */
+    /* ← NEW: Set checkout time and due date (14 days) */
+    long long now = (long long)time(NULL);
+    long long due = now + (14LL * 24 * 3600);  // 14 days in seconds
+
+    member_add_borrow(m, isbn);
+    m->borrowed[m->borrowedCount - 1].checkoutTime = now;
+    m->borrowed[m->borrowedCount - 1].dueTime = due;
+
+    /* update recommendation graph */
     for (int i = 0; i < m->borrowedCount; ++i) {
         if (strcmp(m->borrowed[i].isbn, isbn) != 0)
             graph_add_edge(lib->recommendGraph, isbn, m->borrowed[i].isbn);
     }
 
     printf("Checked out %s to %s (copies left: %d)\n", isbn, mid, b->copies);
-
-
 }
 
 /* called automatically after every check-in */
