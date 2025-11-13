@@ -3,15 +3,18 @@
 
 #include "datastructures/avl.h"
 
-/* central context passed around to avoid globals */
+/* utils.h – add after bookRoot */
+#include "datastructures/hashmap.h"
+#include "datastructures/trie.h"
+#include "datastructures/graph.h"
+#include "datastructures/priorityqueue.h"
+
 typedef struct {
-    AVLNode *bookRoot;   /* AVL tree root for books (key = isbn) */
-    /* later add:
-       HashMap *memberMap;
-       Trie *titleTrie;
-       Graph *recommendationGraph;
-       PriorityQueue *reservationPQ;
-    */
+    AVLNode       *bookRoot;
+    HashMap       *memberMap;
+    TrieNode      *titleTrie;
+    Graph         *recommendGraph;
+    PriorityQueue *reservationPQ;
 } Library;
 
 void initLibrary(Library *lib);

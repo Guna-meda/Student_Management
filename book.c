@@ -3,6 +3,7 @@
 #include <string.h>
 #include "book.h"
 #include "datastructures/avl.h"
+#include "datastructures/trie.h"
 
 /* helper to create a Book* */
 static Book* create_book(const char* isbn, const char* title, const char* author, int copies) {
@@ -39,6 +40,8 @@ void addBook(Library *lib) {
 
     lib->bookRoot = avl_insert(lib->bookRoot, isbn, (void*)b);
     printf("Book added: %s (%s) copies=%d\n", title, isbn, copies);
+    /* insert title into the autocomplete Trie */
+lib->titleTrie = trie_insert(lib->titleTrie, b->title, b);
 }
 
 void removeBook(Library *lib) {
